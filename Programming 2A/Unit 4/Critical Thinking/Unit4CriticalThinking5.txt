@@ -1,0 +1,9 @@
+(junior OR senior) AND (Aaverage OR Baverage)
+
+IF ( (gradeLevel == "junior" OR gradeLevel == "senior") AND 
+     (average == "A" OR average == "B") ) THEN
+    PRINT "You can attend the dance."
+ELSE
+    PRINT "Sorry, you do not meet the requirements."
+END IF
+

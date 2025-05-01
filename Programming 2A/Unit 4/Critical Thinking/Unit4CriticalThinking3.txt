@@ -1,0 +1,13 @@
+SWITCH dayOFWeek
+    CASE "Monday":
+        PRINT "Start of the week!"
+    CASE "Wednesday":
+        PRINT "Halfway there!"
+    CASE "Friday":
+        PRINT "Almost the weekend!"
+    DEFAULT:
+        PRINT "Just another day"
+END SWITCH
+    
+
+    
