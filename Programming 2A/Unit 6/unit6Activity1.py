@@ -6,24 +6,24 @@ Attribute1, Attribute2, Attribute 3
 Method1, Method2, Method3
 
 Person:
-Age, Name, Grade
-printItems
+Age, Name
+about
 
 Teacher:
-name, gradeTeaching, classTimes, students, studentAmt
-printGradeAndClass, takeAttendance
+name, age, gradeTeaching, classTimes, students
+whosTakingTheClass, whatGradeDoITeach, about
 
 Student:
 name, age, grade, classes, gpa
-printItems
+whatGPA, about, whatClasses
 
 OfficeStaff:
-
-
+name, age, department, skills
+staffsSkills, attendMeeting, completeTask, aboutStaff
 
 Principal:
-
-
+age, name, yearsWorked, schoolName
+holdAssembly, evaluateTeacher, introduceSelf
 '''
 
 class Person:
@@ -31,33 +31,94 @@ class Person:
         self.__age = age
         self.__name = name
         
-    def printItems(self):
-        print(f"{self.__name}'s is {self.__age} years old.")
+    def about(self):
+        return f"{self.__name}'s is {self.__age} years old."
   
 class Teacher(Person):
-    def __init__(self, age, name, gradeTeaching, classTimes, students):
+    def __init__(self, age, name, gradeTeaching, classTime, students):
         super().__init__(self, age, name)  
         
         self.__gradeTeaching = gradeTeaching    
-        self.__classTimes = classTimes
+        self.__classTime = classTime
         self.__students = students
         
-    def printClassandGrade(self):
-        print(f"{self.__name} teaches grade {self.__gradeTeaching} at {self.__classTimes}.")
+    def about(self):
+        return f"{self.__name} is {self.__age}."
         
-    def whosInClass(self):
-        print(f"The students taking the class are: {self.__students}.")
+    def whatGradeDoITeach(self):
+        return f"{self.__name} teaches grade {self.__gradeTeaching} at {self.__classTime}."
+    
+    def whosTakingTheClass(self):
+        return f"The students in the class are: {self.__students}"
         
 class Student(Person):
     def __init__(self, age, name, grade, classes, gpa):
         Person.__init__(age, name)
-
-# class Student:
-#     def __init__(self, grade, classes, gpa):
-#         self.grade = grade
-#         self.classes = classes
-#         self.gpa = gpa
         
-#     def printItems(self):
-#         print(f"{self.name}'s is {self.age} years old and in grade {self.grade}.")
-#         print(f"{self.name} is in these classes: {self.classes}")
+        self.__grade = grade
+        self.__classes = classes
+        self.__gpa = gpa
+        
+    def about(self):
+        return f"{self.__name} is {self.__age} years old and in grade{self.__grade}."
+    
+    def whatGPA(self):
+        return f"{self.__name} has a {self.__gpa} GPA."
+    
+    def whatClasses(self):
+        return f"{self.__name} is in these classes: {self.__classes}."
+        
+class OfficeStaff(Person):
+    def __init__(self, age, name, department, skills):
+        super().__init__(age, name)
+        
+        self.__department = department
+        self.__skills = skills
+        
+    def aboutStaff(self):
+        return f"{self.__name} is in the {self.__department} department."
+        
+    def staffsSkills(self):
+        return f"{self.__name}'s skills are, {self.__skills}"
+        
+    def attendMeeting(self, topic):
+        return f"{self.__name} is attending a meeting about {topic}."
+    
+    def completeTask(self, task):
+        return f"{self.__name} has completed the task: {task}."
+        
+class Principal(Person):
+    def __init__(self, age, name, yearsWorked, schoolName):
+        super().__init__(age, name)
+        
+        self.__yearsWorked = yearsWorked
+        self.__schoolName = schoolName
+        
+    def introduceSelf(self):
+        return f"Hello, my name is {self.__name}, I am your new principal."
+    
+    def holdAssembly(self, topic):
+        return f"{self.__name} is holding an assembly about {topic}."
+        
+    def evaluateTeacher(self, teacherName):
+        return f"{self.__name} is evaluating {teacherName}'s work."
+
+# Students - Age, Name, Grade, Classes, GPA
+Alice = Student(19, "Alice", 13, ["History", "Chemistry", "Math", "English"], 3.9)
+Brian = Student(16, "Brian", 11, ["History", "Science", "Math", "English"], 4.0)
+Elena = Student(16, "Elena", 11, ["History", "Science", "Math", "English"], 2.9)
+Frank = Student(17, "Frank", 11, ["History", "Science", "Math", "English"], 3.4)
+Jacob = Student(18, "Jacob", 13, ["History", "Chemistry", "Math", "AP English"], 2.5)
+Isla = Student(19, "Isla", 13, ["AP History", "Chemistry", "AP Physics", "English"], 3.9)
+
+# Teachers - Age, Name, Grade teaching, Class time, Students
+Carla = Person(37, "Carla")
+David = Person(42, "David")
+
+# Office Staff
+Hassan = Person(40, "Hassan")
+Grace = Person(51, "Grace")
+Liam = Person(47, "Liam")
+
+# Principal
+Kendra = Person(62, "Kendra")
