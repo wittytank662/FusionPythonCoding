@@ -28,80 +28,81 @@ holdAssembly, evaluateTeacher, introduceSelf
 
 class Person:
     def __init__(self, age, name):
-        self.__age = age
-        self.__name = name
+        self._age = age
+        self._name = name
         
     def about(self):
-        return f"{self.__name}'s is {self.__age} years old."
+        return f"{self._name}'s is {self._age} years old."
   
 class Teacher(Person):
     def __init__(self, age, name, gradeTeaching, classTime, students):
-        super().__init__(self, age, name)  
+        super().__init__(age, name)  
         
-        self.__gradeTeaching = gradeTeaching    
-        self.__classTime = classTime
-        self.__students = students
-        
+        self._gradeTeaching = gradeTeaching    
+        self._classTime = classTime
+        self._students = students
+
     def about(self):
-        return f"{self.__name} is {self.__age}."
+        return f"{self._name} is {self._age}."
         
     def whatGradeDoITeach(self):
-        return f"{self.__name} teaches grade {self.__gradeTeaching} at {self.__classTime}."
+        return f"{self._name} teaches grade {self._gradeTeaching} at {self._classTime}."
     
     def whosTakingTheClass(self):
-        return f"The students in the class are: {self.__students}"
+        names = [student._name for student in self._students]
+        return f"The students in the class are: {names}"
         
 class Student(Person):
     def __init__(self, age, name, grade, classes, gpa):
-        Person.__init__(age, name)
+        Person.__init__(self, age, name)
         
-        self.__grade = grade
-        self.__classes = classes
-        self.__gpa = gpa
+        self._grade = grade
+        self._classes = classes
+        self._gpa = gpa
         
     def about(self):
-        return f"{self.__name} is {self.__age} years old and in grade{self.__grade}."
+        return f"{self._name} is {self._age} years old and in grade {self._grade}."
     
     def whatGPA(self):
-        return f"{self.__name} has a {self.__gpa} GPA."
+        return f"{self._name} has a {self._gpa} GPA."
     
     def whatClasses(self):
-        return f"{self.__name} is in these classes: {self.__classes}."
+        return f"{self._name} is in these classes: {self._classes}."
         
 class OfficeStaff(Person):
     def __init__(self, age, name, department, skills):
         super().__init__(age, name)
         
-        self.__department = department
-        self.__skills = skills
+        self._department = department
+        self._skills = skills
         
     def aboutStaff(self):
-        return f"{self.__name} is in the {self.__department} department."
+        return f"{self._name} is in the {self._department} department."
         
     def staffsSkills(self):
-        return f"{self.__name}'s skills are, {self.__skills}"
+        return f"{self._name}'s skills are, {self._skills}"
         
     def attendMeeting(self, topic):
-        return f"{self.__name} is attending a meeting about {topic}."
+        return f"{self._name} is attending a meeting about {topic}."
     
     def completeTask(self, task):
-        return f"{self.__name} has completed the task: {task}."
+        return f"{self._name} has completed the task: {task}."
         
 class Principal(Person):
     def __init__(self, age, name, yearsWorked, schoolName):
         super().__init__(age, name)
         
-        self.__yearsWorked = yearsWorked
-        self.__schoolName = schoolName
+        self._yearsWorked = yearsWorked
+        self._schoolName = schoolName
         
     def introduceSelf(self):
-        return f"Hello, my name is {self.__name}, I am your new principal."
+        return f"Hello, my name is {self._name}, I am your new principal."
     
     def holdAssembly(self, topic):
-        return f"{self.__name} is holding an assembly about {topic}."
+        return f"{self._name} is holding an assembly about {topic}."
         
     def evaluateTeacher(self, teacherName):
-        return f"{self.__name} is evaluating {teacherName}'s work."
+        return f"{self._name} is evaluating {teacherName}'s work."
 
 # Students - Age, Name, Grade, Classes, GPA
 Alice = Student(19, "Alice", 13, ["History", "Chemistry", "Math", "English"], 3.9)
@@ -122,3 +123,16 @@ Liam = OfficeStaff(47, "Liam", "Counseling", ["Communication", "Empathy"])
 
 # Principal - Age, Name, Years worked, School name
 Kendra = Principal(62, "Kendra", 8, "Willow Creek")
+
+print(Alice.about())
+
+print(Carla.whosTakingTheClass())
+
+print(Grace.completeTask("check attendance"))
+
+print(Kendra.introduceSelf())
+
+if Brian._gpa > Elena._gpa:
+    print(f"{Brian._name} has a higher GPA than {Elena._name}.")
+else:
+    print(f"{Elena._name} has a higher or equal GPA than {Brian._name}.")
