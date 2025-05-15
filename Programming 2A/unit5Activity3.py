@@ -37,7 +37,7 @@ def generateFibonacci(n):
     return fibList
 
 # Test
-fibNumbers = generateFibonacci(10)
+fibNumbers = generateFibonacci(10) # Output [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 
 # Step 3
 # Convert to binary
@@ -54,4 +54,4 @@ def toBinary(num):
 # Convert Fibonacci numbers to binary
 binaryList = [toBinary(num) for num in fibNumbers]
 
-print("Binary equivalents:", binaryList)
+print("Binary equivalents:", binaryList) # Output ['0', '1', '1', '10', '11', '101', '1000', '1101', '10101', '100010']

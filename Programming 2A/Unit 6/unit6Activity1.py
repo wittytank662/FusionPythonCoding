@@ -112,13 +112,13 @@ Jacob = Student(18, "Jacob", 13, ["History", "Chemistry", "Math", "AP English"],
 Isla = Student(19, "Isla", 13, ["AP History", "Chemistry", "AP Physics", "English"], 3.9)
 
 # Teachers - Age, Name, Grade teaching, Class time, Students
-Carla = Person(37, "Carla")
-David = Person(42, "David")
+Carla = Teacher(37, "Carla", 11, 1, [Alice, Elena, Frank])
+David = Teacher(42, "David", 13, 3, [Brian, Jacob, Isla])
 
-# Office Staff
-Hassan = Person(40, "Hassan")
-Grace = Person(51, "Grace")
-Liam = Person(47, "Liam")
+# Office Staff - Age, Name, Department, Skills
+Hassan = OfficeStaff(40, "Hassan", "Administration", ["Organization", "Multitasking"])
+Grace = OfficeStaff(51, "Grace", "Attendance", ["Time managment", "Data entry"])
+Liam = OfficeStaff(47, "Liam", "Counseling", ["Communication", "Empathy"])
 
-# Principal
-Kendra = Person(62, "Kendra")
+# Principal - Age, Name, Years worked, School name
+Kendra = Principal(62, "Kendra", 8, "Willow Creek")
