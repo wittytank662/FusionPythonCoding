@@ -24,3 +24,5 @@ elif symbol == "*":
 elif symbol == "/":
     output = inputOne / inputTwo
     print(inputOne, symbol, inputTwo, "=", output)
+
+# Simple calculator that only does addition, subtraction, multiplication, and division

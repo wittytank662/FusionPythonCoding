@@ -24,3 +24,5 @@ while True:
         elif guessAgain in ["No", "no", "n", "N"]:
             print("Okay! It was fun playing with you!")
             break
+
+# Small number guesser
