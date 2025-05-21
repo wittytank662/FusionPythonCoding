@@ -1,0 +1,8 @@
+Find5GoldRoom	GiantSpiderRoom	SnakePitRoom	LeaveCaveRoom	*
+*	*	Find5GoldRoom	*	*
+Find5GoldRoom	*	OgreRoom	*	Find5GoldRoom
+OgreRoom	*	SnakePitRoom	SnakePitRoom	GiantSpiderRoom
+GiantSpiderRoom	*	*	*	EmptyCavePath
+EmptyCavePath	Find5GoldRoom	EmptyCavePath	*	EmptyCavePath
+*	*	EmptyCavePath	*	EmptyCavePath
+*	SnakePitRoom	FindDaggerRoom	EmptyCavePath	StartingRoom
