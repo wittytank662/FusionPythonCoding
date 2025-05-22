@@ -91,6 +91,16 @@ class FindDaggerRoom(LootRoom):
         It's a dagger! You pick it up.
         """
 
+# Added a way to get rusty sword
+class FindRustySwordRoom(LootRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, items.RustySword())
+        
+    def intro_text(self):
+        return """
+        You notice a rusty sword lying against a wall next to a pile of bones
+        """
+
 
 class Find5GoldRoom(LootRoom):
     def __init__(self, x, y):
@@ -99,6 +109,16 @@ class Find5GoldRoom(LootRoom):
     def intro_text(self):
         return """
         Someone dropped a 5 gold piece. You pick it up.
+        """
+
+# Created a room to go with the diamond
+class FindDiamondRoom(LootRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, items.Diamond(1))
+        
+    def intro_text(self):
+        return """
+        You found a shiny diamond sticking out of the wall.
         """
 
 
@@ -146,6 +166,21 @@ class OgreRoom(EnemyRoom):
         else:
             return """
             A dead ogre reminds you of your triumph.
+            """
+            
+# Created a room to go with skeleton
+class SkeletonRoom(EnemyRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y, enemies.Skeleton())
+        
+    def intro_text(self):
+        if self.enemy.is_alive():
+            return """
+            A skeleton rattles infront of you!
+            """
+        else:
+            return """
+            A pile of bones lays on the ground
             """
 
 

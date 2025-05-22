@@ -15,7 +15,7 @@ def tile_exists(x, y):
 
 def load_tiles():
     """Parses a file that describes the world space into the _world object"""
-    with open('/Users/april/Developer/FusionPythonCoding/Programming 2A/Unit 7/AdventureGame/map.txt', 'r') as f:
+    with open('/Users/april/Developer/FusionPythonCoding/Programming 2A/Unit 7/Lessons/AdventureGame/map.txt', 'r') as f:
         rows = f.readlines()
     x_max = len(rows[0].split('\t'))
     for y in range(len(rows)):

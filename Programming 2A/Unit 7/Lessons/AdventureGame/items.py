@@ -36,6 +36,14 @@ class Dagger(Weapon):
                          description="A small dagger with some rust. Somewhat more dangerous than a rock.",
                          value=10,
                          damage=10)
+        
+# Added rusty sword as a better weapon than dagger
+class RustySword(Weapon):
+    def __init__(self):
+        super().__init__(name="Rusty Sword",
+                         description="A sword covered in rust. Somehow more dangerous than a dagger even though it looks like it will break every swing.",
+                         value=20,
+                         damage=15)
 
 
 class Gold(Item):
@@ -43,4 +51,12 @@ class Gold(Item):
         self.amt = amt
         super().__init__(name="Gold",
                          description="A round coin with {} stamped on the front.".format(str(self.amt)),
+                         value=self.amt)
+
+# Added diamond as a better prize than gold
+class Diamond(Item):
+    def __init__(self, amt):
+        self.amt = amt
+        super().__init__(name="Diamond",
+                         description="A rare shiny gem.",
                          value=self.amt)
