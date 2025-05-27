@@ -21,27 +21,25 @@ class Sets() # set will be formatted like: "Reps: X, Weight: X"
 
 
 '''
-exercises = []
 
 class Workout():
-  def __init__(self, exercise, day):
-    self.exercises = exercise
+  def __init__(self, exercises, day):
+    self.exercises = exercises
     self.day = day
     
   def addExercise(self, exercise):
     # Adds the exercise to the workout data
-    exercises.append(self.exercise)
+    self.exercises.append(exercise)
     
   def saveData(self):
     # Saves the data in a .txt file
     pass
-  
-  def printWorkout(self):
-    # Prints the workout data
-    print(f"The workout is: {exercises}") # this is a no no
     
   def __str__(self):
-    return f"The workout is: {exercises}"
+    return f"The workout on {self.day} is: {self.exercises}."
+  
+  def __repr__(self):
+    return self.__str__()
 
 
 class Exercise():
@@ -55,6 +53,9 @@ class Exercise():
   
   def __str__(self):
     return f"Exercise: {self.exerciseName}, Sets: {self.sets}."
+  
+  def __repr__(self):
+    return self.__str__()
     
     
     
@@ -71,26 +72,25 @@ class Set():
   def setWeight(self, weight):
     self.weight = weight
     return f"The new weight is now: {self.weight}"
+  
+  def __str__(self):
+    return f"Reps: {self.reps}, Weight: {self.weight}"
+  
+  def __repr__(self):
+    return self.__str__()
     
-set1 = set(5, 80)
-set2 = set("five")
-set3 = set("four")
-set4 = set("three")
+squatSet1 = Set(5, 80)
+squatSet2 = Set(5, 80)
+squatSet3 = Set(5, 80)
   
-squats = Exercise("Squats", [set1, set2, set3])
+squats = Exercise("Squats", [squatSet1, squatSet2, squatSet3])
 
-print(squats.addSet(set4))
+pushupSet1 = Set(5, 0)
+pushupSet2 = Set(5, 0)
+pushupSet3 = Set(5, 0)
 
+pushups = Exercise("Pushups", [pushupSet1, pushupSet2, pushupSet3])
 
+workout1 = Workout([pushups, squats], "01/10/10")
 
-  
-  
-
-# def addExercise():
-#   # need to add an exercise name, the sets, and then reps.
-#   exercise = []
-#   exercise.append(input("What exercise did you do: "))
-#   exercise.append(input("How many sets did you do: "))
-#   exercise.append(input("How many reps did you do: "))
-#   exercise.append(input("How much weight did you have: "))
-#   exercise.append(input("What day was this? (xx/xx/xx): "))
+print(workout1)
