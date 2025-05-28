@@ -1,0 +1,7 @@
+The workout on 01/10/10 is: [Exercise: Pushups, Sets: [
+Reps: 5, Weight: 0, 
+Reps: 5, Weight: 0, 
+Reps: 5, Weight: 0]., Exercise: Squats, Sets: [
+Reps: 5, Weight: 80, 
+Reps: 5, Weight: 80, 
+Reps: 5, Weight: 80].].
