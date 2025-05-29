@@ -21,6 +21,8 @@ class Sets() # set will be formatted like: "Reps: X, Weight: X"
 
 
 '''
+import re
+
 
 class Workout():
   def __init__(self, exercises, day):
@@ -74,11 +76,26 @@ class Set():
   def stringToObject(self, string):
     reps = ""
     weight = ""
+    
     for i in range(len(string)):
-      if string[i] == "R" and string[i + 1] == "e" and string[i + 2] == "p" and string[i + 3] == "s":
-        while string[i + 6] != ",":
-          reps = reps+string[i + 6]
-        print(reps)
+      
+      if string[i:i+4] == "Reps":
+        j = i + 6
+        while string[j] != ",":
+          reps += string[j]
+          j += 1
+          
+      if string[i:i+6] == "Weight":
+        j = i + 8
+        while j < len(string) and string[j] not in [",", "]", "."]:
+          weight += string[j]
+          j += 1
+          
+    self.reps = int(reps)
+    self.weight = int(weight)
+    
+    return f"Reps: {self.reps}, Weight: {self.weight}"
+          
 
   def setWeight(self, weight):
     self.weight = weight
@@ -98,16 +115,37 @@ def saveData(workout):
   
   file.write(workout.saveData())
   file.write("\n")
-  file.close
+  file.close()
   
 def loadData():
   pass
 
 def loadWorkout():
-  file = open("/Users/april/Developer/FusionPythonCoding/Programming 2A/Unit 7/Final/data.txt", "r")
+  file = open("data.txt", "r")
   
   exerciseString = file.readline()
   print(exerciseString)
+    
+def getSets(fullString):
+  pattern = r"Reps: \d+, Weight: \d+"
+  return re.findall(pattern, fullString)
+    
+def loadSetFromLine():
+  lineNum = int(input("Enter the line number you want to read: "))
+  with open("data.txt", "r") as file:
+    lines = file.readlines()
+    if 0 <= lineNum - 1 < len(lines):
+      line = lines[lineNum - 1].strip()
+      setsStrings = getSets(line)
+      setsObjs = []
+      for s in setsStrings:
+        setObj = Set()
+        setObj.stringToObject(s)
+        setsObjs.append(setObj)
+      for so in setsObjs:
+        print(so)
+    else:
+      print("Invalid line number.")
     
 squatSet1 = Set(5, 80)
 squatSet2 = Set(5, 80)
@@ -130,4 +168,11 @@ workout1 = Workout([pushups, squats], "01/10/10")
 # loadWorkout()
 
 setDebug = Set()
-setDebug.stringToObject("Reps: 5, Weight: 0")
+print(setDebug.stringToObject("Reps: 5, Weight: 0"))
+
+if __name__ == "__main__":
+  # Testing
+  setDebug = Set()
+  print(setDebug.stringToObject("Reps: 5, Weight: 0"))
+  
+  loadSetFromLine()
