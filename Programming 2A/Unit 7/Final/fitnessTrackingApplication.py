@@ -18,8 +18,6 @@ def setWeight # sets the weight that youve done for each set
 
 class Sets() # set will be formatted like: "Reps: X, Weight: X"
 
-
-
 '''
 import re
 
@@ -34,15 +32,17 @@ class Workout():
     self.exercises.append(exercise)
     
   def saveData(self):
-    # Saves the data in a .txt file
-    return f"The workout on {self.day} is: {self.exercises}."
+    with open("data.txt", "a") as file:
+      file.write(str(self))
+      file.write("\n")
+    return f"Workout on {self.day} saved successfully."
+
     
   def __str__(self):
     return f"The workout on {self.day} is: {self.exercises}."
   
   def __repr__(self):
     return self.__str__()
-
 
 class Exercise():
   def __init__(self, exerciseName, sets):
@@ -53,16 +53,12 @@ class Exercise():
     (self.sets).append(whichSet)
     return f"Your sets are now: {self.sets}"
   
-  def saveData(self):
-    return f"Exercise: {self.exerciseName}, Sets: {self.sets}."
-  
   def __str__(self):
-    return f"Exercise: {self.exerciseName}, Sets: {self.sets}."
+    setsStr = "\n    ".join(str(s) for s in self.sets)
+    return f"Exercise: {self.exerciseName}\n    {setsStr}."
   
   def __repr__(self):
     return self.__str__()
-    
-    
     
 class Set():
   def __init__(self, reps = 0, weight = 0):
@@ -146,7 +142,54 @@ def loadSetFromLine():
         print(so)
     else:
       print("Invalid line number.")
+
+def parseWorkoutLine(line):
+  dayMatch = re.search(r"The workout on (.*?) is:", line)
+  if not dayMatch:
+    return None
+  day =dayMatch.group(1)
+  
+  exercisePattern = r"Exercise: (\w+), Sets: \[(.*?)\]"
+  exerciseMatches = re.findall(exercisePattern, line)
+  
+  exercises = []
+  for exName, setsStr in exerciseMatches:
+    setPattern = r"Reps: (\d+), Weight: (\d+)"
+    sets = [Set(int(r), int(w)) for r, w in re.findall(setPattern, setsStr)]
+    exercises.append(Exercise(exName, sets))
+  
+  return Workout(exercises, day)
+
+def searchWorkouts():
+  userDate = input("Enter the workout date to search (MM/DD/YY): ").strip()
+  
+  parts = userDate.split("/")
+  if len(parts) == 3:
+    month = parts[0].zfill(2)
+    day = parts[1].zfill(2)
+    year = parts[2]
+    userDate = f"{month}/{day}/{year}"
     
+  found = False
+  with open("data.txt", "r") as file:
+    for line in file:
+      if userDate in line:
+        found = True
+        print(f"Found workout for {userDate}:\n")
+        
+        exercisePattern = r"Exercise: (.*?), Sets: \[(.*?)\]\."
+        matches = re.findall(exercisePattern, line)
+        
+        for name, setsStr in matches:
+          print(f"Exercise: {name}")
+          setEntries = re.findall(r"Reps: \d+, Weight: \d+", setsStr)
+          for s in setEntries:
+            print(f"  {s}")
+        
+  if not found:
+    print("No workouts found for this day")
+
+
 squatSet1 = Set(5, 80)
 squatSet2 = Set(5, 80)
 squatSet3 = Set(5, 80)
@@ -167,12 +210,13 @@ workout1 = Workout([pushups, squats], "01/10/10")
 
 # loadWorkout()
 
-setDebug = Set()
-print(setDebug.stringToObject("Reps: 5, Weight: 0"))
-
 if __name__ == "__main__":
   # Testing
   setDebug = Set()
   print(setDebug.stringToObject("Reps: 5, Weight: 0"))
   
   loadSetFromLine()
+  
+print(pushups)
+
+searchWorkouts()
