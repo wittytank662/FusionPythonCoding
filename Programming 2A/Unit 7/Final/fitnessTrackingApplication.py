@@ -210,13 +210,13 @@ workout1 = Workout([pushups, squats], "01/10/10")
 
 # loadWorkout()
 
-if __name__ == "__main__":
-  # Testing
-  setDebug = Set()
-  print(setDebug.stringToObject("Reps: 5, Weight: 0"))
+# if __name__ == "__main__":
+#   # Testing
+#   setDebug = Set()
+#   print(setDebug.stringToObject("Reps: 5, Weight: 0"))
   
-  loadSetFromLine()
+#   loadSetFromLine()
   
-print(pushups)
+# print(pushups)
 
 searchWorkouts()
