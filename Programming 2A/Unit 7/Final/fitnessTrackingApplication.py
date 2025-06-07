@@ -21,6 +21,12 @@ class Sets() # set will be formatted like: "Reps: X, Weight: X"
 '''
 import re
 
+header = ('''╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                               Fitness Tracker                                ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+''')
 
 class Workout():
   def __init__(self, exercises, day):
@@ -32,10 +38,7 @@ class Workout():
     self.exercises.append(exercise)
     
   def saveData(self):
-    with open("data.txt", "a") as file:
-      file.write(str(self))
-      file.write("\n")
-    return f"Workout on {self.day} saved successfully."
+    return str(self) + "\n"
 
     
   def __str__(self):
@@ -54,8 +57,8 @@ class Exercise():
     return f"Your sets are now: {self.sets}"
   
   def __str__(self):
-    setsStr = "\n    ".join(str(s) for s in self.sets)
-    return f"Exercise: {self.exerciseName}\n    {setsStr}."
+    setsStr = ", ".join(str(s) for s in self.sets)
+    return f"Exercise: {self.exerciseName}, Sets: [{setsStr}]"
   
   def __repr__(self):
     return self.__str__()
@@ -107,11 +110,8 @@ class Set():
     return self.__str__()
     
 def saveData(workout):
-  file = open("data.txt", "a")
-  
-  file.write(workout.saveData())
-  file.write("\n")
-  file.close()
+  with open("data.txt", "a") as file:
+    file.write(workout.saveData())
   
 def loadData():
   pass
@@ -189,6 +189,66 @@ def searchWorkouts():
   if not found:
     print("No workouts found for this day")
 
+def addWorkoutUi():
+    day = input("Enter workout day (MM/DD/YY): ").strip()
+    workout = Workout([], day)
+    
+    while True:
+        ex_name = input("Enter exercise name (or type 'done' to finish): ").strip()
+        if ex_name.lower() == "done":
+            break
+        exercise = Exercise(ex_name, [])
+        
+        while True:
+            try:
+                reps = int(input(f"Enter number of reps for {ex_name}: "))
+                weight = int(input(f"Enter weight used for {ex_name} (0 for bodyweight): "))
+                exercise.addSet(Set(reps, weight))
+            except ValueError:
+                print("Please enter valid numbers.")
+                continue
+            
+            more_sets = input("Add another set for this exercise? (y/n): ").strip().lower()
+            if more_sets != "y":
+                break
+
+        workout.addExercise(exercise)
+    
+    print("\nWorkout summary:")
+    print(workout)
+    saveData(workout)
+    
+def mainMenu():
+    while True:
+        print(header)
+        print("╔════════════════════════════════════════════╗")
+        print("║                 Main Menu                  ║")
+        print("╠════════════════════════════════════════════╣")
+        print("║ 1. Access Workouts                         ║")
+        print("║ 2. Edit a Workout                          ║")
+        print("║ 3. Add a Workout                           ║")
+        print("║ 4. Exit                                    ║")
+        print("╚════════════════════════════════════════════╝")
+        choice = input("Enter your choice (1-4): ").strip()
+
+        if choice == "1":
+            print("\n══ Access Workouts ══")
+            searchWorkouts()
+            input("\nPress Enter to return to the main menu...")
+        elif choice == "2":
+            print("\n══ Edit Workout ══")
+            loadSetFromLine()
+            input("\nPress Enter to return to the main menu...")
+        elif choice == "3":
+            print("\n══ Add Workout ══")
+            addWorkoutUi()
+            input("\nPress Enter to return to the main menu...")
+        elif choice == "4":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+            input("Press Enter to continue...")
 
 squatSet1 = Set(5, 80)
 squatSet2 = Set(5, 80)
@@ -219,4 +279,6 @@ workout1 = Workout([pushups, squats], "01/10/10")
   
 # print(pushups)
 
-searchWorkouts()
+# searchWorkouts()
+
+mainMenu()
