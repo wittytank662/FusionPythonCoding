@@ -20,6 +20,7 @@ class Sets() # set will be formatted like: "Reps: X, Weight: X"
 
 '''
 import re
+import os
 
 header = ('''╔══════════════════════════════════════════════════════════════════════════════╗
 ║                                                                              ║
@@ -149,7 +150,7 @@ def parseWorkoutLine(line):
     return None
   day =dayMatch.group(1)
   
-  exercisePattern = r"Exercise: (\w+), Sets: \[(.*?)\]"
+  exercisePattern = r"Exercise: (.*?), Sets: \[(.*?)\](?:\.|,)"
   exerciseMatches = re.findall(exercisePattern, line)
   
   exercises = []
@@ -218,17 +219,90 @@ def addWorkoutUi():
     print(workout)
     saveData(workout)
     
+def editWorkout(dayInput):
+  tempFile = "temp.txt"
+  found = False
+
+  parts = dayInput.split("/")
+  if len(parts) == 3:
+    month = parts[0].zfill(2)
+    day = parts[1].zfill(2)
+    year = parts[2]
+    dayInput = f"{month}/{day}/{year}"
+
+  with open("data.txt", "r") as readFile, open(tempFile, "w") as writeFile:
+      for line in readFile:
+          workout = parseWorkoutLine(line.strip())
+
+          if workout and workout.day == dayInput:
+              found = True
+              print(f"Found workout on {dayInput}:")
+              print(workout)
+
+              if workout.exercises:
+                  print("\nExercises:")
+                  for i, ex in enumerate(workout.exercises):
+                      print(f"{i + 1}. {ex.exerciseName}")
+                  
+                  try:
+                      ex_choice = int(input("Select exercise to edit (number): ")) - 1
+                      if 0 <= ex_choice < len(workout.exercises):
+                          ex = workout.exercises[ex_choice]
+                          print(f"Selected exercise: {ex.exerciseName}")
+                          print("Current sets:")
+                          for idx, s in enumerate(ex.sets):
+                              print(f"{idx + 1}. {s}")
+
+                          action = input("Would you like to (a)dd a new set or (d)elete an existing one? ").strip().lower()
+                          if action == "a":
+                              reps = int(input("Enter reps for new set: "))
+                              weight = int(input("Enter weight for new set: "))
+                              ex.addSet(Set(reps, weight))
+                              print("Set added.")
+                          elif action == "d":
+                              del_idx = int(input("Enter set number to delete: ")) - 1
+                              if 0 <= del_idx < len(ex.sets):
+                                  removed = ex.sets.pop(del_idx)
+                                  print(f"Removed set: {removed}")
+                              else:
+                                  print("Invalid set number.")
+                          else:
+                              print("Invalid action.")
+                          print("Updated exercise:")
+                          print(ex)
+                      else:
+                          print("Invalid exercise choice.")
+                  except ValueError:
+                      print("Invalid input. Must be a number.")
+
+              writeFile.write(str(workout) + "\n")
+          else:
+              writeFile.write(line)
+
+  if found:
+      os.replace(tempFile, "data.txt")
+      print(f"Workout on {dayInput} updated successfully.")
+  else:
+      os.remove(tempFile)
+      print(f"No workout found on {dayInput}.")
+
+
+def editWorkoutUi():
+  day = input("Enter the workout day to edit (MM/DD/YY):").strip()
+  editWorkout(day)
+    
 def mainMenu():
     while True:
         print(header)
-        print("╔════════════════════════════════════════════╗")
-        print("║                 Main Menu                  ║")
-        print("╠════════════════════════════════════════════╣")
-        print("║ 1. Access Workouts                         ║")
-        print("║ 2. Edit a Workout                          ║")
-        print("║ 3. Add a Workout                           ║")
-        print("║ 4. Exit                                    ║")
-        print("╚════════════════════════════════════════════╝")
+        
+        print('''╔════════════════════════════════════════════╗
+║                 Main Menu                  ║
+╠════════════════════════════════════════════╣
+║ 1. Access Workouts                         ║
+║ 2. Edit a Workout                          ║
+║ 3. Add a Workout                           ║
+║ 4. Exit                                    ║
+╚════════════════════════════════════════════╝''')
         choice = input("Enter your choice (1-4): ").strip()
 
         if choice == "1":
@@ -237,7 +311,7 @@ def mainMenu():
             input("\nPress Enter to return to the main menu...")
         elif choice == "2":
             print("\n══ Edit Workout ══")
-            loadSetFromLine()
+            editWorkoutUi()
             input("\nPress Enter to return to the main menu...")
         elif choice == "3":
             print("\n══ Add Workout ══")
@@ -250,19 +324,19 @@ def mainMenu():
             print("Invalid choice. Please try again.")
             input("Press Enter to continue...")
 
-squatSet1 = Set(5, 80)
-squatSet2 = Set(5, 80)
-squatSet3 = Set(5, 80)
+# squatSet1 = Set(5, 80)
+# squatSet2 = Set(5, 80)
+# squatSet3 = Set(5, 80)
   
-squats = Exercise("Squats", [squatSet1, squatSet2, squatSet3])
+# squats = Exercise("Squats", [squatSet1, squatSet2, squatSet3])
 
-pushupSet1 = Set(5, 0)
-pushupSet2 = Set(5, 0)
-pushupSet3 = Set(5, 0)
+# pushupSet1 = Set(5, 0)
+# pushupSet2 = Set(5, 0)
+# pushupSet3 = Set(5, 0)
 
-pushups = Exercise("Pushups", [pushupSet1, pushupSet2, pushupSet3])
+# pushups = Exercise("Pushups", [pushupSet1, pushupSet2, pushupSet3])
 
-workout1 = Workout([pushups, squats], "01/10/10")
+# workout1 = Workout([pushups, squats], "01/10/10")
 
 # print(workout1)
 
