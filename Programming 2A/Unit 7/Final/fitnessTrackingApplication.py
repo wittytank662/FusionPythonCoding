@@ -162,7 +162,7 @@ def parseWorkoutLine(line):
   return Workout(exercises, day)
 
 def searchWorkouts():
-  userDate = input("Enter the workout date to search (MM/DD/YY): ").strip()
+  userDate = input("Enter the workout date (MM/DD/YY): ").strip()
   
   parts = userDate.split("/")
   if len(parts) == 3:
@@ -286,11 +286,39 @@ def editWorkout(dayInput):
       os.remove(tempFile)
       print(f"No workout found on {dayInput}.")
 
-
 def editWorkoutUi():
-  day = input("Enter the workout day to edit (MM/DD/YY):").strip()
+  day = input("Enter the workout day to edit (MM/DD/YY): ").strip()
   editWorkout(day)
+  
+def deleteWorkout():
+  userDate = input("Enter the workout date (MM/DD/YY): ").strip()
+  
+  parts = userDate.split("/")
+  if len(parts) == 3:
+    month = parts[0].zfill(2)
+    day = parts[1].zfill(2)
+    year = parts[2]
+    userDate = f"{month}/{day}/{year}"
     
+  found = False
+  with open("data.txt", "r") as file:
+    
+    lines = file.readlines()
+    
+    newLines = [line for line in lines if userDate not in line]
+    
+    if len(newLines) == len(lines):
+      print("No workouts found for this day.")
+      return
+    
+    delete = input(f"Are you sure you want to delete the workout for {userDate}? (y/n): ").lower()
+    if delete == "y":
+      with open("data.txt", "w") as file:
+        file.writelines(newLines)
+      print("Workout deleted.")
+    else:
+      print("Canceled.")
+        
 def mainMenu():
     while True:
         print(header)
@@ -301,9 +329,10 @@ def mainMenu():
 ║ 1. Access Workouts                         ║
 ║ 2. Edit a Workout                          ║
 ║ 3. Add a Workout                           ║
-║ 4. Exit                                    ║
+║ 4. Delete a Workout                        ║
+║ 5. Exit                                    ║
 ╚════════════════════════════════════════════╝''')
-        choice = input("Enter your choice (1-4): ").strip()
+        choice = input("Enter your choice (1-5): ").strip()
 
         if choice == "1":
             print("\n══ Access Workouts ══")
@@ -318,8 +347,12 @@ def mainMenu():
             addWorkoutUi()
             input("\nPress Enter to return to the main menu...")
         elif choice == "4":
-            print("Goodbye!")
-            break
+          print("\n══ Delete Workout ══")
+          deleteWorkout()
+          input("\nPress Enter to return to the main menu...")
+        elif choice == "5":
+          print("Goodbye!")
+          break
         else:
             print("Invalid choice. Please try again.")
             input("Press Enter to continue...")
