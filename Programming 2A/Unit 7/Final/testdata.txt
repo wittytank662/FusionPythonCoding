@@ -1,5 +1,0 @@
-The workout on 01/10/10 is: [Exercise: Pushups, Sets: [Reps: 5, Weight: 0, Reps: 5, Weight: 0, Reps: 5, Weight: 0]., Exercise: Squats, Sets: [Reps: 5, Weight: 80, Reps: 5, Weight: 80, Reps: 5, Weight: 80].].
-The workout on 01/15/10 is: [Exercise: Overhead Press, Sets: [Reps: 4, Weight: 50, Reps: 4, Weight: 50, Reps: 4, Weight: 50]., Exercise: Deadlift, Sets: [Reps: 5, Weight: 100, Reps: 5, Weight: 100, Reps: 5, Weight: 100].].
-The workout on 01/20/10 is: [Exercise: Pullups, Sets: [Reps: 7, Weight: 0, Reps: 7, Weight: 0, Reps: 7, Weight: 0]., Exercise: Bench Press, Sets: [Reps: 5, Weight: 70, Reps: 5, Weight: 70, Reps: 5, Weight: 70].].
-The workout on 01/25/10 is: [Exercise: Pushups, Sets: [Reps: 10, Weight: 0, Reps: 10, Weight: 0, Reps: 10, Weight: 0]., Exercise: Squats, Sets: [Reps: 5, Weight: 90, Reps: 5, Weight: 90, Reps: 5, Weight: 90].].
-The workout on 01/30/10 is: [Exercise: Pullups, Sets: [Reps: 10, Weight: 0, Reps: 10, Weight: 0, Reps: 10, Weight: 0]., Exercise: Bench Press, Sets: [Reps: 5, Weight: 80, Reps: 5, Weight: 80, Reps: 5, Weight: 80].].
